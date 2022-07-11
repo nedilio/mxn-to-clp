@@ -40,3 +40,11 @@ li {
 li.active {
   font-weight: bold;
 }
+footer {
+  border-top: #59595971 solid 1px;
+  font-weight: bold;
+}
+footer a {
+  color: cornflowerblue;
+  text-decoration: none;
+}

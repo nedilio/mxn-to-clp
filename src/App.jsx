@@ -58,7 +58,15 @@ function App() {
       />
       <h2>🇨🇱 CLP: {clp.toFixed(0)}</h2>
       <h2>🇺🇸 USD: {usd.toFixed(2)}</h2>
-      <footer>by Nedilio 2022</footer>
+      <footer>
+        <a
+          href="https://github.com/nedilio"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <p>by @nedilio</p>
+        </a>
+      </footer>
     </div>
   );
 }
