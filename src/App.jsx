@@ -22,30 +22,51 @@ function App() {
     setArs(arsInput);
   };
 
+  const handleChangeRate = (event, rate) => {
+    setDolarArg(rate);
+    const active = document
+      .querySelector("li.active")
+      .classList.remove("active");
+    event.target.classList.add("active");
+  };
+
   useEffect(() => {
     setUsd(ars / dolarArg);
     setClp((ars / dolarArg) * dolarChile);
   }, [dolarArg]);
 
   useEffect(() => {
-    fetch("https://mindicador.cl/api/")
-      .then((res) => res.json())
-      .then((res) => setDolarChile(res.dolar.valor));
+    // fetch("https://mindicador.cl/api/")
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     setDolarChile(res.dolar.valor);
+    //     // console.log(res);
+    //   });
     fetch("https://api.bluelytics.com.ar/v2/latest")
       .then((res) => res.json())
       .then((res) => setDolarBlueArg(res.blue.value_buy));
+
+    fetch(
+      "https://api.cmfchile.cl/api-sbifv3/recursos_api/dolar?apikey=9c84db4d447c80c74961a72245371245cb7ac15f&formato=json"
+    )
+      .then((res) => res.json())
+      .then((res) => setDolarChile(parseInt(res.Dolares[0].Valor)));
   }, []);
 
   return (
     <div className="App">
       <nav>
         <ul>
-          <li onClick={() => setDolarArg(245)} className="active">
-            1$ = 245 ARS
+          <li
+            id="cambiado"
+            onClick={() => handleChangeRate(event, 245)}
+            className="active"
+          >
+            1💲 = 245 ARS
           </li>
-          {/* <li onClick={() => setDolarArg(dolarBlueArg)}>
-            1$ = {dolarBlueArg} ARS
-          </li> */}
+          <li id="blue" onClick={() => handleChangeRate(event, dolarBlueArg)}>
+            1💲 = {dolarBlueArg} ARS
+          </li>
         </ul>
       </nav>
       <h1>Convertir 🇦🇷 🔁 🇨🇱</h1>
@@ -56,7 +77,10 @@ function App() {
         name="ars"
         onChange={handleOnChange}
       />
-      <h2>🇨🇱 CLP: {clp.toFixed(0)}</h2>
+      <div>
+        <h2>🇨🇱 CLP: {clp.toFixed(0)}</h2>
+        <p>1💲 = {dolarChile} CLP</p>
+      </div>
       <h2>🇺🇸 USD: {usd.toFixed(2)}</h2>
       <footer>
         <a

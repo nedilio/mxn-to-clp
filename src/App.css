@@ -39,6 +39,7 @@ li {
 }
 li.active {
   font-weight: bold;
+  text-decoration: underline;
 }
 footer {
   border-top: #59595971 solid 1px;
