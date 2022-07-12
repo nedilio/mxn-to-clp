@@ -47,7 +47,7 @@ function App() {
       .then((res) => setDolarBlueArg(res.blue.value_buy));
 
     fetch(
-      "https://api.cmfchile.cl/api-sbifv3/recursos_api/dolar?apikey=9c84db4d447c80c74961a72245371245cb7ac15f&formato=json"
+      "https://api.cmfchile.cl/api-sbifv3/recursos_api/dolar?apikey=74480963fcc3674c7781f739601f8dcee31aef6b&formato=json"
     )
       .then((res) => res.json())
       .then((res) => setDolarChile(parseInt(res.Dolares[0].Valor)));
