@@ -36,12 +36,6 @@ function App() {
   }, [dolarArg]);
 
   useEffect(() => {
-    // fetch("https://mindicador.cl/api/")
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     setDolarChile(res.dolar.valor);
-    //     // console.log(res);
-    //   });
     fetch("https://api.bluelytics.com.ar/v2/latest")
       .then((res) => res.json())
       .then((res) => setDolarBlueArg(res.blue.value_buy));
@@ -88,7 +82,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <p>by @nedilio</p>
+          by @nedilio
         </a>
       </footer>
     </div>

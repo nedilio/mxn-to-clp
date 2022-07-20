@@ -36,6 +36,7 @@ ul {
 }
 li {
   display: inline;
+  cursor: pointer;
 }
 li.active {
   font-weight: bold;
@@ -44,8 +45,9 @@ li.active {
 footer {
   border-top: #59595971 solid 1px;
   font-weight: bold;
+  padding: 1rem 0;
 }
 footer a {
   color: cornflowerblue;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
