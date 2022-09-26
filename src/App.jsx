@@ -4,41 +4,37 @@ import "./App.css";
 
 function App() {
   const [dolarChile, setDolarChile] = useState(0);
-  const [dolarBlueArg, setDolarBlueArg] = useState(0);
+  const [dolarMX, setDolarMX] = useState(0);
   const [clp, setClp] = useState(0);
   const [usd, setUsd] = useState(0);
-  const [ars, setArs] = useState(0);
-  const [dolarArg, setDolarArg] = useState(245);
+  const [mxn, setMxn] = useState(0);
 
   const handleOnChange = (e) => {
-    let arsInput = 0;
+    let mxInput = 0;
     if (e.target.value === "") {
-      arsInput = 0;
+      mxInput = 0;
     } else {
-      arsInput = parseInt(e.target.value);
+      mxInput = parseInt(e.target.value);
     }
-    setUsd(arsInput / dolarArg);
-    setClp((arsInput / dolarArg) * dolarChile);
-    setArs(arsInput);
-  };
-
-  const handleChangeRate = (event, rate) => {
-    setDolarArg(rate);
-    const active = document
-      .querySelector("li.active")
-      .classList.remove("active");
-    event.target.classList.add("active");
+    setUsd(mxInput / dolarMX);
+    setClp((mxInput / dolarMX) * dolarChile);
+    setMxn(mxInput);
   };
 
   useEffect(() => {
-    setUsd(ars / dolarArg);
-    setClp((ars / dolarArg) * dolarChile);
-  }, [dolarArg]);
 
-  useEffect(() => {
-    fetch("https://api.bluelytics.com.ar/v2/latest")
-      .then((res) => res.json())
-      .then((res) => setDolarBlueArg(res.blue.value_buy));
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': 'f5b8bf79e4msh25787ede94720aep17173ejsne2e841f052f2',
+          'X-RapidAPI-Host': 'currency-exchange.p.rapidapi.com'
+        }
+      };
+      
+      fetch('https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=MXN&q=1.0', options)
+        .then(response => response.json())
+        .then(response => setDolarMX(response))
+        .catch(err => console.error(err));
 
     fetch(
       "https://api.cmfchile.cl/api-sbifv3/recursos_api/dolar?apikey=74480963fcc3674c7781f739601f8dcee31aef6b&formato=json"
@@ -51,20 +47,13 @@ function App() {
     <div className="App">
       <nav>
         <ul>
-          <li
-            id="cambiado"
-            onClick={() => handleChangeRate(event, 245)}
-            className="active"
-          >
-            1💲 = 245 ARS
-          </li>
-          <li id="blue" onClick={() => handleChangeRate(event, dolarBlueArg)}>
-            1💲 = {dolarBlueArg} ARS
+          <li id="blue">
+            1💲 = {dolarMX.toFixed(2)} MXN
           </li>
         </ul>
       </nav>
-      <h1>Convertir 🇦🇷 🔁 🇨🇱</h1>
-      <label htmlFor="ars">Precio en ARS 🇦🇷</label>
+      <h1>Convertir 🌮 🔁 🌶</h1>
+      <label htmlFor="ars">Precio en MXN</label>
       <input
         type="number"
         inputMode="decimal"

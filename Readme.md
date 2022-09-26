@@ -1,9 +1,9 @@
 # ARS to CLP
-App en React JS para hacer el cambio entre pesos argentinos y pesos chilenos.
-Se usa la API para obtener el dolar blue y Dolar chile.
+App en React JS para hacer el cambio entre pesos mexicanos y pesos chilenos.
+Se usa rapid api para tener el cambio usd mxn y Dolar chile.
 
 ##Deploy
-[ARS to CLP](https://rococo-cajeta-d4a2bc.netlify.app)
+[ARS to CLP](https://mxn-to-clp.netlify.app)
 
 ![](https://res.cloudinary.com/dlrsxizob/image/upload/v1657642820/ARStoCLP.png)
 
