@@ -5,8 +5,10 @@ import "./App.css";
 function App() {
   const [dolarChile, setDolarChile] = useState(0);
   const [dolarMX, setDolarMX] = useState(0);
+  const [eurMX, setEurMX] = useState(0);
   const [clp, setClp] = useState(0);
   const [usd, setUsd] = useState(0);
+  const [eur, setEur] = useState(0);
   const [mxn, setMxn] = useState(0);
 
   const handleOnChange = (e) => {
@@ -18,6 +20,7 @@ function App() {
     }
     setUsd(mxInput / dolarMX);
     setClp((mxInput / dolarMX) * dolarChile);
+    setEur(mxInput/eurMX);
     setMxn(mxInput);
   };
 
@@ -34,6 +37,11 @@ function App() {
       fetch('https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=MXN&q=1.0', options)
         .then(response => response.json())
         .then(response => setDolarMX(response))
+        .catch(err => console.error(err));
+        
+        fetch('https://currency-exchange.p.rapidapi.com/exchange?from=EUR&to=MXN&q=1', options)
+        .then(response => response.json())
+        .then(response => setEurMX(response))
         .catch(err => console.error(err));
 
     fetch(
@@ -64,7 +72,8 @@ function App() {
         <h2>🇨🇱 CLP: {clp.toFixed(0)}</h2>
         <p>1💲 = {dolarChile} CLP</p>
       </div>
-      <h2>🇺🇸 USD: {usd.toFixed(2)}</h2>
+      <h2>💵USD: {usd.toFixed(2)}</h2>
+      <h2>💶 EUR: {eur.toFixed(2)}</h2>
       <footer>
         <a
           href="https://github.com/nedilio"
