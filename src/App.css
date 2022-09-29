@@ -33,14 +33,30 @@ ul {
   display: flex;
   justify-content: space-around;
   padding: 0;
+  width: 30%;
+  margin: 20px auto;
 }
 li {
   display: inline;
   cursor: pointer;
+  opacity: 50%;
+  font-size: 2rem;
+  position: relative;
+}
+li::after {
+  border-bottom: 4px solid cornflowerblue;
+  content: "";
+  width: 0%;
+  display: block;
+  transition: width ease-in-out 250ms;
 }
 li.active {
-  font-weight: bold;
-  text-decoration: underline;
+  /* font-weight: bold; */
+  /* text-decoration: underline; */
+  opacity: 100%;
+}
+li.active::after {
+  width: 100%;
 }
 footer {
   border-top: #59595971 solid 1px;
