@@ -1,0 +1,14 @@
+.exchange {
+  box-sizing: border-box;
+  border: 1px solid #a7a7a7;
+  width: 60%;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  padding: 8px 1px;
+}
+
+.exchange h2 {
+  font-size: 1.3rem;
+  margin: 0;
+}

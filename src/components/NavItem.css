@@ -1,0 +1,22 @@
+li {
+  display: inline;
+  cursor: pointer;
+  opacity: 30%;
+  font-size: 2.5rem;
+  position: relative;
+}
+li::after {
+  border-bottom: 4px solid cornflowerblue;
+  content: "";
+  width: 0%;
+  display: block;
+  transition: width ease-in-out 250ms;
+}
+li.active {
+  /* font-weight: bold; */
+  /* text-decoration: underline; */
+  opacity: 100%;
+}
+li.active::after {
+  width: 100%;
+}

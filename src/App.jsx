@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import Exchange from "./components/Exchange";
 import "./App.css";
+import NavItem from "./components/NavItem";
+import Form from "./components/Form";
+import Footer from "./components/Footer";
 
 function App() {
   const [dolarMX, setDolarMX] = useState(0);
@@ -28,7 +31,6 @@ function App() {
   };
 
   const handleChangeCountry = (event, country) => {
-    // setDolarArSsetDolarArS(rate);
     setCountry(countries[country]);
     const active = document
       .querySelector("li.active")
@@ -75,8 +77,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("cambia input");
-    console.log(country.dolar);
     if (country.dolar) {
       setUsd(input / country.dolar);
       setClp((input / country.dolar) * dolarChile);
@@ -85,55 +85,44 @@ function App() {
   }, [input, country]);
   useEffect(() => {
     setCountry(mexico);
-    console.log(countries);
   }, [dolarMX, eurMX]);
 
   return (
     <div className="App">
       <nav>
         <ul>
-          <li
-            id="mxn"
+          <NavItem
+            country="mx"
+            flag="🇲🇽"
+            currency="mxn"
             className="active"
-            onClick={() => handleChangeCountry(event, "mx")}
-          >
-            🇲🇽
-          </li>
-          <li
-            id="ars"
-            className=""
-            onClick={() => handleChangeCountry(event, "ar")}
-          >
-            🇦🇷
-          </li>
+            handleChangeCountry={handleChangeCountry}
+            active
+          ></NavItem>
+          <NavItem
+            country="ar"
+            flag="🇦🇷"
+            currency="ars"
+            handleChangeCountry={handleChangeCountry}
+          ></NavItem>
         </ul>
       </nav>
-      <h1>Convertir {country.flag} 🔁 🇨🇱</h1>
-      <h5 id="blue">
+      <h1>Convertir {country.flag} 🔁 </h1>
+      <h5 id="rate">
         1💲 = {country.dolar || dolarMX} {country.id}
       </h5>
-      <label htmlFor="ars">Precio en {country.id}</label>
-      <input
-        type="number"
-        inputMode="decimal"
-        name="ars"
-        onChange={handleOnChange}
-      />
-      <div>
-        <h2>🇨🇱 CLP: {clp.toFixed(0)}</h2>
-        <p>1💲 = {dolarChile} CLP</p>
-      </div>
-      <h2>🇺🇸 USD: {usd.toFixed(2)}</h2>
-      {country.id === "MXN" && <h2>🇪🇺 EUR: {eur.toFixed(2)}</h2>}
-      <footer>
-        <a
-          href="https://github.com/nedilio"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          by @nedilio
-        </a>
-      </footer>
+      <Form handleOnChange={handleOnChange} currency={country.id}></Form>
+      <Exchange country="CLP" flag="🇨🇱" currency={clp} decimals={0}></Exchange>
+      <Exchange country="USD" flag="🇺🇸" currency={usd} decimals={2}></Exchange>
+      {country.id === "MXN" && (
+        <Exchange
+          country="EUR"
+          flag="🇪🇺"
+          currency={eur}
+          decimals={2}
+        ></Exchange>
+      )}
+      <Footer />
     </div>
   );
 }
