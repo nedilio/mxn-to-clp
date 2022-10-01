@@ -69,7 +69,16 @@ function App() {
       "https://api.cmfchile.cl/api-sbifv3/recursos_api/dolar?apikey=74480963fcc3674c7781f739601f8dcee31aef6b&formato=json"
     )
       .then((res) => res.json())
-      .then((res) => setDolarChile(parseInt(res.Dolares[0].Valor)));
+      .then((res) => setDolarChile(parseInt(res.Dolares[0].Valor)))
+      .catch(
+        fetch(
+          "https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=CLP&q=1",
+          options
+        )
+          .then((response) => response.json())
+          .then((response) => setDolarChile(response.toFixed(2)))
+          .catch((err) => console.error(err))
+      );
 
     fetch("https://api.bluelytics.com.ar/v2/latest")
       .then((res) => res.json())
