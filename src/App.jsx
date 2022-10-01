@@ -4,6 +4,8 @@ import "./App.css";
 import NavItem from "./components/NavItem";
 import Form from "./components/Form";
 import Footer from "./components/Footer";
+import { getDolarArg, getDolarChile, getCurrency } from "./services";
+import { getCountry } from "./services/getLocation";
 
 function App() {
   const [dolarMX, setDolarMX] = useState(0);
@@ -41,48 +43,26 @@ function App() {
   const countries = { mx: mexico, ar: argentina };
 
   useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "f5b8bf79e4msh25787ede94720aep17173ejsne2e841f052f2",
-        "X-RapidAPI-Host": "currency-exchange.p.rapidapi.com",
-      },
-    };
+    getCurrency("USD", "MXN").then((precioDolar) =>
+      setDolarMX(precioDolar.toFixed(2))
+    );
 
-    fetch(
-      "https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=MXN&q=1",
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => setDolarMX(response.toFixed(2)))
-      .catch((err) => console.error(err));
+    getCurrency("EUR", "MXN").then((precioDolar) =>
+      setEurMX(precioDolar.toFixed(2))
+    );
 
-    fetch(
-      "https://currency-exchange.p.rapidapi.com/exchange?from=EUR&to=MXN&q=1",
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => setEurMX(response))
-      .catch((err) => console.error(err));
+    getDolarChile()
+      .then((precioDolar) => setDolarChile(precioDolar))
+      .catch(() => {
+        console.log("Error valor dolar chile, buscare en otra api");
+        getCurrency("USD", "CLP").then((res) => setDolarChile(res));
+      });
 
-    fetch(
-      "https://api.cmfchile.cl/api-sbifv3/recursos_api/dolar?apikey=74480963fcc3674c7781f739601f8dcee31aef6b&formato=json"
-    )
-      .then((res) => res.json())
-      .then((res) => setDolarChile(parseInt(res.Dolares[0].Valor)))
-      .catch(
-        fetch(
-          "https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=CLP&q=1",
-          options
-        )
-          .then((response) => response.json())
-          .then((response) => setDolarChile(response.toFixed(2)))
-          .catch((err) => console.error(err))
-      );
+    getDolarArg().then((precioDolar) => setDolarARS(precioDolar));
 
-    fetch("https://api.bluelytics.com.ar/v2/latest")
-      .then((res) => res.json())
-      .then((res) => setDolarARS(res.blue.value_buy));
+    getCountry().then((country) => {
+      console.log(country);
+    });
   }, []);
 
   useEffect(() => {

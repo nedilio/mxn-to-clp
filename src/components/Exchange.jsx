@@ -4,7 +4,7 @@ const Exchange = ({ currency, flag, country, decimals }) => {
   return (
     <div className="exchange">
       <h2>
-        {flag} {country}: {currency.toFixed(decimals)}
+        {flag} {country}: {currency ? currency.toFixed(decimals) : 0}
       </h2>
     </div>
   );
