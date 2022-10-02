@@ -57,7 +57,7 @@ function App() {
       setCountry(mexico);
       setTimeout(() => {
         setLoader(false);
-      }, 1000);
+      }, 1250);
     });
 
     getCountry().then((country) => {

@@ -1,12 +1,15 @@
 import "./Loader.css";
 const Loader = () => {
+  const images = [
+    "https://res.cloudinary.com/dlrsxizob/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1664724008/Conversion/cats-2.gif",
+    "https://res.cloudinary.com/dlrsxizob/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1664724008/Conversion/cats-3.gif",
+    "https://res.cloudinary.com/dlrsxizob/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1664724008/Conversion/cats-1.gif",
+  ];
+  const random = Math.floor(Math.random() * 3);
   return (
     <div className="loader">
-      <img
-        src="https://media3.giphy.com/media/AAO7CYEKrIGfGphpFO/giphy.webp?cid=dda24d50fba048bc83f06973ed5db15466b121a42a016334&rid=giphy.webp&ct=g"
-        alt="loading cat"
-        width="250"
-      />
+      <p className="cargando">Cargando...</p>
+      <img src={images[random]} alt="loading cat" width="250" />
     </div>
   );
 };

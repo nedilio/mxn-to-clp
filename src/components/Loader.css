@@ -1,8 +1,18 @@
 .loader {
-  background-color: #c8c8c8;
+  background-color: #262c35;
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.cargando {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  color: azure;
+  top: 3rem;
 }
