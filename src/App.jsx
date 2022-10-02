@@ -4,21 +4,21 @@ import "./App.css";
 import NavItem from "./components/NavItem";
 import Form from "./components/Form";
 import Footer from "./components/Footer";
-import { getDolarArg, getDolarChile, getCurrency } from "./services";
+import {
+  getDolarArg,
+  getDolarChile,
+  getCurrency,
+  getCurrencyMx,
+} from "./services";
 import { getCountry } from "./services/getLocation";
 import Loader from "./components/Loader";
 
-const mexico = { id: "MXN", flag: "🇲🇽" };
-const argentina = { id: "ARS", flag: "🇦🇷" };
-const countries = { mx: mexico, ar: argentina };
-
 function App() {
-  const [dolarChile, setDolarChile] = useState(0);
-  const [eurMX, setEurMX] = useState(0);
   const [convertido, setConvertido] = useState({ clp: 0, usd: 0, eur: 0 });
   const [input, setInput] = useState(0);
-  const [country, setCountry] = useState(mexico);
+  const [country, setCountry] = useState({});
   const [loader, setLoader] = useState(true);
+  const [countries, setCountries] = useState({});
 
   const handleOnChange = (e) => {
     let input = 0;
@@ -32,36 +32,44 @@ function App() {
 
   const handleChangeCountry = (event, country) => {
     setCountry(countries[country]);
-    const active = document
-      .querySelector("li.active")
-      .classList.remove("active");
+    document.querySelector("li.active").classList.remove("active");
     event.target.classList.add("active");
   };
 
   useEffect(() => {
     Promise.all([
-      getCurrency("USD", "MXN"),
-      getCurrency("EUR", "MXN"),
-      getDolarChile(),
+      getCurrencyMx("MXN"),
+      getCurrencyMx("USD"),
       getDolarArg(),
-    ]).then(([dolar, euro, precioCl, precioAr]) => {
-      setEurMX(euro.toFixed(2));
-      setDolarChile(precioCl);
-      mexico.dolar = dolar.toFixed(2);
-      argentina.dolar = precioAr;
-      setLoader(false);
+    ]).then(([currencyMx, currencyUs, dolarBlueAr]) => {
+      const mexico = { id: "MXN", flag: "🇲🇽", ...currencyMx, decimals: 2 };
+      const argentina = {
+        id: "ARS",
+        flag: "🇦🇷",
+        USD: currencyUs.USD / dolarBlueAr,
+        EUR: currencyUs.EUR / dolarBlueAr,
+        CLP: currencyUs.CLP / dolarBlueAr,
+        decimals: 0,
+      };
+      const paises = { mx: mexico, ar: argentina };
+      console.log(paises);
+      setCountries(paises);
+      setCountry(mexico);
+      setTimeout(() => {
+        setLoader(false);
+      }, 1000);
     });
 
     getCountry().then((country) => {
-      console.log(country);
+      // console.log(country);
     });
   }, []);
 
   useEffect(() => {
-    if (country.dolar) {
-      const usd = input / country.dolar;
-      const clp = (input / country.dolar) * dolarChile;
-      const eur = input / eurMX;
+    if (country.USD) {
+      const usd = input * country.USD;
+      const clp = input * country.CLP;
+      const eur = input * country.EUR;
       setConvertido({ clp, usd, eur });
     }
   }, [input, country]);
@@ -92,7 +100,8 @@ function App() {
           </nav>
           <h1>Convertir {country.flag} 🔁 </h1>
           <h5 id="rate">
-            1💲 = {country.dolar} {country.id}
+            {" "}
+            1💲 = {(1 / country.USD).toFixed(country.decimals)} {country.id}{" "}
           </h5>
           <Form handleOnChange={handleOnChange} currency={country.id}></Form>
           <Exchange
@@ -107,14 +116,12 @@ function App() {
             currency={convertido.usd}
             decimals={2}
           ></Exchange>
-          {country.id === "MXN" && (
-            <Exchange
-              country="EUR"
-              flag="🇪🇺"
-              currency={convertido.eur}
-              decimals={2}
-            ></Exchange>
-          )}
+          <Exchange
+            country="EUR"
+            flag="🇪🇺"
+            currency={convertido.eur}
+            decimals={2}
+          ></Exchange>
           <Footer />
         </div>
       )}

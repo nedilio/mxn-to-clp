@@ -5,6 +5,7 @@ const Form = ({ handleOnChange, currency }) => {
     <form action="">
       <label htmlFor="price">Precio en {currency}</label>
       <input
+        id="price"
         type="number"
         inputMode="decimal"
         name="price"
