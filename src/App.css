@@ -4,13 +4,13 @@ body {
 .App {
   text-align: center;
   box-sizing: border-box;
-  max-width: 90%;
-  margin: 1rem auto;
+  margin: 0 auto;
   border: 1px solid #a7a7a7;
   border-radius: 20px;
-  height: 85vh;
+  /* height: 85vh; */
   box-shadow: #bcbcbcab 8px 8px 7px;
   position: relative;
+  max-width: 768px;
 }
 
 h1 {

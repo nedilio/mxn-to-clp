@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Exchange from "./components/Exchange";
-import "./App.css";
+// import "./App.css";
 import NavItem from "./components/NavItem";
 import Form from "./components/Form";
 import Footer from "./components/Footer";
@@ -79,50 +79,53 @@ function App() {
       {loader ? (
         <Loader />
       ) : (
-        <div className="App">
-          <nav>
-            <ul>
-              <NavItem
-                country="mx"
-                flag="🇲🇽"
-                currency="mxn"
-                className="active"
-                handleChangeCountry={handleChangeCountry}
-                active
-              ></NavItem>
-              <NavItem
-                country="ar"
-                flag="🇦🇷"
-                currency="ars"
-                handleChangeCountry={handleChangeCountry}
-              ></NavItem>
-            </ul>
-          </nav>
-          <h1>Convertir {country.flag} 🔁 </h1>
-          <h5 id="rate">
-            {" "}
-            1💲 = {(1 / country.USD).toFixed(country.decimals)} {country.id}{" "}
-          </h5>
-          <Form handleOnChange={handleOnChange} currency={country.id}></Form>
-          <Exchange
-            country="CLP"
-            flag="🇨🇱"
-            currency={convertido.clp}
-            decimals={0}
-          ></Exchange>
-          <Exchange
-            country="USD"
-            flag="🇺🇸"
-            currency={convertido.usd}
-            decimals={2}
-          ></Exchange>
-          <Exchange
-            country="EUR"
-            flag="🇪🇺"
-            currency={convertido.eur}
-            decimals={2}
-          ></Exchange>
-          <Footer />
+        <div className="flex justify-center items-center h-screen bg-emerald-100 text-emerald-800 px-4">
+          <div className="border p-4 rounded-xl border-gray-400 shadow-md pb-0 text-center w-full max-w-lg">
+            <nav className="mb-4">
+              <ul className="flex justify-around">
+                <NavItem
+                  country="mx"
+                  flag="🇲🇽"
+                  currency="mxn"
+                  className="active"
+                  handleChangeCountry={handleChangeCountry}
+                  active
+                ></NavItem>
+                <NavItem
+                  country="ar"
+                  flag="🇦🇷"
+                  currency="ars"
+                  handleChangeCountry={handleChangeCountry}
+                ></NavItem>
+              </ul>
+            </nav>
+            <h1 className="font-bold text-2xl ">Convertir {country.flag} 🔁</h1>
+            <h5 id="rate" className="font-semibold">
+              1💲 = {(1 / country.USD).toFixed(country.decimals)} {country.id}{" "}
+            </h5>
+            <Form handleOnChange={handleOnChange} currency={country.id}></Form>
+            <section className="flex flex-col gap-y-1 mt-2">
+              <Exchange
+                country="CLP"
+                flag="🇨🇱"
+                currency={convertido.clp}
+                decimals={0}
+              ></Exchange>
+              <Exchange
+                country="USD"
+                flag="🇺🇸"
+                currency={convertido.usd}
+                decimals={2}
+              ></Exchange>
+              <Exchange
+                country="EUR"
+                flag="🇪🇺"
+                currency={convertido.eur}
+                decimals={2}
+              ></Exchange>
+            </section>
+            <Footer />
+          </div>
         </div>
       )}
     </>
